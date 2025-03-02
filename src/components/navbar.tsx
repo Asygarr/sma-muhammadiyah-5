@@ -22,7 +22,7 @@ export default function navbar() {
         <Link href="/" className="text-blue-600">
           Beranda
         </Link>
-        <div className="relative group">
+        {/* <div className="relative group">
           <button className="hover:text-blue-600">Tentang Kami</button>
           <div className="absolute left-0 hidden group-hover:block bg-white shadow-lg p-2 rounded-md">
             <Link href="#" className="block px-4 py-2 hover:bg-gray-200">
@@ -32,7 +32,10 @@ export default function navbar() {
               Visi Misi
             </Link>
           </div>
-        </div>
+        </div> */}
+        <Link href="#" className="hover:text-blue-600">
+          Tentang Kami
+        </Link>
         <Link href="#" className="hover:text-blue-600">
           Program
         </Link>

@@ -19,7 +19,7 @@ export default function Hero() {
         <div className="mt-6 flex justify-center md:justify-start">
           <Link
             href="#"
-            className="text-sm px-4 py-3 bg-blue-600 text-white md:px-6 md:py-3 rounded-full font-semibold shadow-md hover:bg-blue-700"
+            className="text-xs md:text-sm px-4 py-3 bg-blue-600 text-white md:px-6 md:py-3 rounded-full font-semibold shadow-md hover:bg-blue-700"
           >
             Lihat Selengkapnya
           </Link>

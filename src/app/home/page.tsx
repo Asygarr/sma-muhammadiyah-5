@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import WhySection from "@/components/whySection";
+import ProfileSection from "@/components/profileSection";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Navbar />;
       <Hero />;
       <WhySection />;
+      <ProfileSection />;
     </>
   );
 }
