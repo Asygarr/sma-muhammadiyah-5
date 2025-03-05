@@ -6,7 +6,7 @@ import {
   IconSchool,
 } from "@tabler/icons-react";
 
-export default function whySection() {
+export default function whySection({ id }: { id?: string }) {
   const features = [
     {
       icon: (
@@ -28,11 +28,11 @@ export default function whySection() {
   ];
 
   return (
-    <section className="py-16 bg-white text-center">
+    <section id={id} className="py-16 md:py-[6rem] bg-white text-center">
       <div className="container mx-auto px-6">
         <div className="flex justify-center items-center flex-col">
           <div className="w-full md:w-[40rem]">
-            <h2 className="text-3xl md:text-4xl font-bold">
+            <h2 className="text-2xl md:text-4xl font-bold">
               Kenapa Harus{" "}
               <span className="text-blue-600">SMA Muhammadiyah 5</span>{" "}
               Makassar?

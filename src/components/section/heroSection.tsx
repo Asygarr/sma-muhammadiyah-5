@@ -3,12 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Hero() {
+export default function heroSection({ id }: { id?: string }) {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center gap-12 px-6 md:px-12 py-1.5 max-w-screen-lg mx-auto">
+    <section
+      id={id}
+      className="flex flex-col md:flex-row items-center justify-center gap-12 mt-20 px-6 md:px-12 py-1.5 max-w-screen-lg mx-auto"
+    >
       {/* Left Section */}
       <div className="md:w-1/2 text-center md:text-left">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900">
+        <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900">
           SMA <span className="text-blue-600">Muhammadiyah</span> 5 Makassar
         </h1>
         <p className="text-base text-gray-600 mt-4 md:text-lg">
@@ -18,7 +21,7 @@ export default function Hero() {
         </p>
         <div className="mt-6 flex justify-center md:justify-start">
           <Link
-            href="#"
+            href="#tentangKami"
             className="text-xs md:text-sm px-4 py-3 bg-blue-600 text-white md:px-6 md:py-3 rounded-full font-semibold shadow-md hover:bg-blue-700"
           >
             Lihat Selengkapnya

@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 
-export default function profileSection() {
+export default function profileSection({ id }: { id?: string }) {
   return (
-    <section className="px-6 md:px-16 py-12">
+    <section id={id} className="px-6 md:px-16 py-12 md:py-24">
       {/* Headline */}
       <div className="text-center flex justify-center items-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold w-[40rem]">
+        <h2 className="text-2xl md:text-4xl font-bold w-[40rem]">
           Profil <span className="text-blue-600">SMK Muhammadiyah 5</span>{" "}
           Makassar
         </h2>
