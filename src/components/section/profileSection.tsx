@@ -8,7 +8,7 @@ export default function profileSection({ id }: { id?: string }) {
       {/* Headline */}
       <div className="text-center flex justify-center items-center mb-12">
         <h2 className="text-2xl md:text-4xl font-bold w-[40rem]">
-          Profil <span className="text-blue-600">SMK Muhammadiyah 5</span>{" "}
+          Profil <span className="text-blue-600">SMA Muhammadiyah 5</span>{" "}
           Makassar
         </h2>
       </div>
