@@ -17,7 +17,7 @@ export default function profileSection({ id }: { id?: string }) {
         {/* Foto Kepala Sekolah */}
         <div className="w-full md:w-1/2">
           <Image
-            src="/images/foto-kepsek.png"
+            src="/images/foto-kepsek.jpeg"
             alt="Kepala Sekolah"
             width={500}
             height={300}
@@ -31,19 +31,18 @@ export default function profileSection({ id }: { id?: string }) {
             Sambutan Kepala Sekolah SMA Muhammadiyah 5 Makassar
           </h3>
           <p className="text-gray-600 mt-3">
-            Sekolah adalah tempat mencetak penerus bangsa yang berkualitas dan
-            berprestasi di segala bidang yang dapat bersaing di dunia
-            internasional.
+            Puji syukur ke hadirat Allah SWT atas rahmat-Nya, SMA Muhammadiyah 5
+            Makassar terus berkomitmen mencetak generasi Islami, berakhlak
+            mulia, dan berdaya saing global. Dengan kurikulum inovatif serta
+            dukungan guru dan orang tua, kami berharap siswa berkembang optimal
+            dalam akademik, karakter, dan keterampilan hidup.
           </p>
           <p className="text-gray-600 mt-2">
-            Sekolah juga merupakan tempat anak-anak mendapatkan dukungan untuk
-            melengkapi pembelajarannya di sekolah.
-          </p>
-          <p className="text-gray-600 mt-2">
-            Kami berkomitmen untuk memberikan pendidikan terbaik bagi siswa
-            kami. Kami juga berkomitmen untuk membantu siswa kami mencapai cita
-            - cita mereka. Kami berharap siswa kami dapat menjadi generasi yang
-            berprestasi dan dapat bersaing di dunia internasional.
+            Kami percaya bahwa pendidikan bukan hanya tentang akademik, tetapi
+            juga pembentukan karakter, keterampilan, dan kepemimpinan. Dengan
+            dukungan guru, orang tua, serta lingkungan yang kondusif, kami
+            berkomitmen mencetak generasi unggul, berdaya saing, beriman, serta
+            siap menghadapi tantangan di era global.
           </p>
 
           {/* Tombol */}

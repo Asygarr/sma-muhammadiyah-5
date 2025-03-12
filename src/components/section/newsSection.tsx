@@ -13,7 +13,7 @@ export default function newsSection({ id }: { id?: string }) {
       title: "Detail Profile Sekolah SMA Muhammadiyah 5 Makassar",
       description:
         "SMA Muhammadiyah 5 Makassar adalah sekolah yang berada di Makassar.",
-      image: "/images/sekolah-berita.png",
+      image: "/images/sekolah-berita.jpeg",
       url: "https://dapo.dikdasmen.go.id/sekolah/BE8FA5C8A6E159BEF6EC",
     },
   ];

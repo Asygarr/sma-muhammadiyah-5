@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import Link from "next/link";
 
 export default function NavbarSection() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -12,11 +11,11 @@ export default function NavbarSection() {
   return (
     <nav className="bg-white shadow-md px-6 md:px-12 py-5 flex justify-between items-center fixed w-full z-50">
       {/* Logo */}
-      <Link href="#" className="text-base md:text-2xl font-bold">
+      <a href="/" className="text-base md:text-2xl font-bold">
         <span className="text-black">SMA </span>
         <span className="text-blue-600">MUHAMMADIYAH </span>
         <span className="text-black">5 </span>
-      </Link>
+      </a>
 
       {/* Menu - Desktop */}
       <div className="hidden md:flex space-x-6 font-medium">

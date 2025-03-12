@@ -7,7 +7,7 @@ export default function heroSection({ id }: { id?: string }) {
   return (
     <section
       id={id}
-      className="flex flex-col md:flex-row items-center justify-center gap-12 mt-20 px-6 md:px-12 py-1.5 max-w-screen-lg mx-auto"
+      className="flex flex-col md:flex-row items-center justify-center gap-12 mt-20 px-6 md:px-12 py-1.5 md:pt-8 max-w-screen-lg mx-auto"
     >
       {/* Left Section */}
       <div className="md:w-1/2 text-center md:text-left">
@@ -15,9 +15,10 @@ export default function heroSection({ id }: { id?: string }) {
           SMA <span className="text-blue-600">Muhammadiyah</span> 5 Makassar
         </h1>
         <p className="text-base text-gray-600 mt-4 md:text-lg">
-          Sekolah adalah tempat mencetak penerus bangsa yang berkualitas dan
-          berprestasi di segala bidang yang dapat bersaing di dunia
-          internasional.
+          SMA Muhammadiyah 5 Makassar adalah sekolah yang mencetak siswa
+          kompetitif, Islami, berakhlak mulia, berdaya saing global, berilmu,
+          beriman, kreatif, mandiri, serta memiliki kepedulian sosial dan
+          semangat kolaborasi dalam kehidupan bermasyarakat.
         </p>
         <div className="mt-6 flex justify-center md:justify-start">
           <Link
@@ -32,14 +33,15 @@ export default function heroSection({ id }: { id?: string }) {
       {/* Right Section - Image */}
       <div className="relative md:w-1/2 flex justify-center">
         <Image
-          src="/images/sekolah.jpg"
+          src="/images/sekolah-hero.jpg"
           alt="School Hallway"
-          width={400}
-          height={350}
+          className="rounded-lg shadow-xl"
+          width={300}
+          height={250}
         />
 
         {/* Floating Testimonials */}
-        <div className="absolute bottom-5 left-7 bg-white p-3 shadow-md rounded-lg text-sm md:w-[60%]">
+        <div className="absolute bottom-5 left-7 bg-white p-3 shadow-xl rounded-lg text-sm md:w-[60%]">
           <p className="italic">
             "Belajar Itu Menyenangkan, Kuncinya Jangan Pernah Menyerah Oleh
             Apapun Itu"

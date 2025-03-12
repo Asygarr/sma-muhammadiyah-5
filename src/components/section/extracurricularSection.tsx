@@ -1,22 +1,32 @@
 "use client";
 
+import { details } from "framer-motion/client";
 import Image from "next/image";
 
 const extracurriculars = [
   {
-    name: "Praja Muda Karana",
-    year: "2002",
-    image: "/images/pramuka.png",
+    name: "Ikatan Pelajar Muhammadiyah",
+    image: "/images/Logo_IPM.png",
+    width: 30,
+    height: 30,
+    details:
+      "Ikatan Pelajar Muhammadiyah (IPM) adalah organisasi otonom Muhammadiyah yang berfokus pada pengembangan kepemimpinan, keislaman, dan keterampilan pelajar. Ekstrakurikuler IPM bertujuan membentuk karakter siswa yang religius, disiplin, mandiri, dan berwawasan luas. Kegiatan IPM meliputi pelatihan kepemimpinan, kajian keislaman, aksi sosial, serta berbagai program pengembangan diri lainnya. Melalui IPM, siswa diajarkan untuk berorganisasi, berkontribusi dalam kegiatan sosial, serta mengamalkan nilai-nilai Islam dalam kehidupan sehari-hari.",
   },
   {
-    name: "Palang Merah Remaja",
-    year: "2003",
-    image: "/images/pmi.png",
+    name: "Hizbul Wathan",
+    image: "/images/Logo_HW.png",
+    width: 60,
+    height: 60,
+    details:
+      "Hizbul Wathan (HW) adalah organisasi kepanduan yang berlandaskan nilai-nilai Islam dan merupakan bagian dari Muhammadiyah. Ekstrakurikuler HW bertujuan membentuk karakter disiplin, mandiri, serta berjiwa kepemimpinan bagi siswa. Kegiatan dalam HW meliputi latihan keterampilan kepanduan, pembinaan akhlak, pembelajaran kedisiplinan, serta kegiatan alam terbuka seperti berkemah dan bakti sosial. Dengan mengikuti HW, siswa diharapkan memiliki semangat kebersamaan, jiwa sosial yang tinggi, serta mampu mengamalkan nilai-nilai keislaman dalam kehidupan sehari-hari.",
   },
   {
-    name: "Pecinta Alam",
-    year: "2008",
-    image: "/images/pecinta-alam.png",
+    name: "Tapak Suci",
+    image: "/images/Logo_TS.png",
+    width: 60,
+    height: 60,
+    details:
+      "Tapak Suci adalah seni bela diri yang merupakan bagian dari Muhammadiyah, mengajarkan keterampilan fisik sekaligus nilai-nilai spiritual Islam. Ekstrakurikuler ini bertujuan membentuk siswa yang tangguh, disiplin, serta berakhlak mulia. Kegiatan dalam Tapak Suci meliputi latihan bela diri, penguatan mental, pengembangan karakter, serta kompetisi kejuaraan. Selain melatih keterampilan bertahan dan menyerang, Tapak Suci juga menanamkan nilai sportivitas, kepemimpinan, dan ketahanan diri, sehingga siswa dapat tumbuh menjadi pribadi yang kuat secara fisik dan spiritual.",
   },
 ];
 
@@ -38,27 +48,30 @@ export default function extracurricularSection({ id }: { id?: string }) {
 
       {/* Flex Container */}
       <div className="flex flex-wrap justify-center gap-6">
-        {extracurriculars.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-md p-6 flex flex-col items-start w-full md:w-1/2 lg:w-1/4"
-          >
-            <Image
-              src={item.image}
-              alt={item.name}
-              width={60}
-              height={60}
-              className="mb-4"
-            />
-            <h3 className="font-bold text-lg text-start">{item.name}</h3>
-            <p className="text-gray-600 text-sm text-start">
-              Pertama kali dibentuk team tahun {item.year}
-            </p>
-            <button className="mt-4 text-blue-600 font-semibold">
-              Details
-            </button>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {extracurriculars.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-lg shadow-md p-6 flex flex-col h-full"
+            >
+              <div className="flex-grow">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={item.width}
+                  height={item.height}
+                />
+                <h3 className="font-bold text-lg mt-5">{item.name}</h3>
+              </div>
+              <p className="text-gray-600 text-sm mb-5">
+                {item.details.split(" ").slice(0, 9).join(" ")}...
+              </p>
+              <button className="text-blue-600 font-semibold mt-auto self-start">
+                Details
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

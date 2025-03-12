@@ -12,7 +12,7 @@ export default function whySection({ id }: { id?: string }) {
       icon: (
         <IconDeviceLaptop size={48} stroke={1.5} className="text-blue-600" />
       ),
-      title: "Fasilitas Lengkap",
+      title: "Fasilitas Memadai",
       description: "Penunjang belajar dengan kualitas terbaik",
     },
     {
