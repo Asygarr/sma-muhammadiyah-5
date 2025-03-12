@@ -74,7 +74,7 @@ export default function NavbarSection() {
         >
           Berita
         </a>
-        <a
+        {/* <a
           href="#alumni"
           onClick={() => setActiveSection("alumni")}
           className={`${
@@ -84,6 +84,17 @@ export default function NavbarSection() {
           }`}
         >
           Alumni
+        </a> */}
+        <a
+          href="#lokasi"
+          onClick={() => setActiveSection("lokasi")}
+          className={`${
+            activeSection === "lokasi"
+              ? "text-blue-600 font-semibold"
+              : "hover:text-blue-600"
+          }`}
+        >
+          Lokasi
         </a>
       </div>
 
@@ -165,7 +176,7 @@ export default function NavbarSection() {
             >
               Berita
             </a>
-            <a
+            {/* <a
               href="#alumni"
               onClick={() => {
                 setActiveSection("alumni");
@@ -176,6 +187,18 @@ export default function NavbarSection() {
               }`}
             >
               Alumni
+            </a> */}
+            <a
+              href="#lokasi"
+              onClick={() => {
+                setActiveSection("lokasi");
+                setIsOpen(false);
+              }}
+              className={`${
+                activeSection === "lokasi" ? "text-blue-600 font-semibold" : ""
+              }`}
+            >
+              Lokasi
             </a>
           </motion.div>
         )}

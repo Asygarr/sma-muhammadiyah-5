@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-export default function profileSection({ id }: { id?: string }) {
+export default function ProfileSection({ id }: { id?: string }) {
   return (
     <section id={id} className="px-6 md:px-16 py-12 md:py-24">
       {/* Headline */}

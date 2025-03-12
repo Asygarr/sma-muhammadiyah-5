@@ -1,6 +1,7 @@
 "use client";
 
-import { details } from "framer-motion/client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 const extracurriculars = [
@@ -30,24 +31,27 @@ const extracurriculars = [
   },
 ];
 
-export default function extracurricularSection({ id }: { id?: string }) {
-  return (
-    <section id={id} className="px-6 md:px-16 py-16 md:py-24 bg-slate-100">
-      {/* Headline */}
-      <div className="flex justify-center items-center flex-col">
-        <div className="w-full md:w-[40rem] text-center mb-8">
-          <h2 className="text-2xl md:text-4xl font-bold">
-            Ekstrakurikuler Di{" "}
-            <span className="text-blue-600">SMA Muhammadiyah 5</span> Makassar
-          </h2>
-          <p className="text-gray-600 mt-5">
-            Pilihan Ekstrakurikuler di SMA Muhammadiyah 5 Makassar.
-          </p>
-        </div>
-      </div>
+export default function ExtracurricularSection({ id }: { id?: string }) {
+  const [selectedExtracurricular, setSelectedExtracurricular] =
+    useState<any>(null);
 
-      {/* Flex Container */}
-      <div className="flex flex-wrap justify-center gap-6">
+  return (
+    <>
+      <section id={id} className="px-6 md:px-16 py-16 md:py-24 bg-slate-100">
+        {/* Headline */}
+        <div className="flex justify-center items-center flex-col">
+          <div className="w-full md:w-[40rem] text-center mb-8">
+            <h2 className="text-2xl md:text-4xl font-bold">
+              Ekstrakurikuler Di{" "}
+              <span className="text-blue-600">SMA Muhammadiyah 5</span> Makassar
+            </h2>
+            <p className="text-gray-600 mt-5">
+              Pilihan Ekstrakurikuler di SMA Muhammadiyah 5 Makassar.
+            </p>
+          </div>
+        </div>
+
+        {/* Flex Container */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {extracurriculars.map((item, index) => (
             <div
@@ -66,13 +70,57 @@ export default function extracurricularSection({ id }: { id?: string }) {
               <p className="text-gray-600 text-sm mb-5">
                 {item.details.split(" ").slice(0, 9).join(" ")}...
               </p>
-              <button className="text-blue-600 font-semibold mt-auto self-start">
+              <button
+                onClick={() => setSelectedExtracurricular(item)}
+                className="text-blue-600 font-semibold mt-auto self-start"
+              >
                 Details
               </button>
             </div>
           ))}
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Modal Popup */}
+      <AnimatePresence>
+        {selectedExtracurricular && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-white rounded-lg shadow-lg p-6 md:p-8 w-[90%] md:w-[40rem] relative"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            >
+              <button
+                className="absolute top-3 right-3 text-gray-600 hover:text-gray-900"
+                onClick={() => setSelectedExtracurricular(null)}
+              >
+                ✕
+              </button>
+
+              <div className="flex flex-col items-center">
+                <Image
+                  src={selectedExtracurricular.image}
+                  alt={selectedExtracurricular.name}
+                  width={selectedExtracurricular.width}
+                  height={selectedExtracurricular.height}
+                />
+                <h3 className="font-bold text-xl md:text-2xl mt-4">
+                  {selectedExtracurricular.name}
+                </h3>
+                <p className="text-gray-600 text-sm text-center mt-2">
+                  {selectedExtracurricular.details}
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

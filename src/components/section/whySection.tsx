@@ -6,7 +6,7 @@ import {
   IconSchool,
 } from "@tabler/icons-react";
 
-export default function whySection({ id }: { id?: string }) {
+export default function WhySection({ id }: { id?: string }) {
   const features = [
     {
       icon: (

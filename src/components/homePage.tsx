@@ -6,6 +6,7 @@ import ExtraSection from "@/components/section/extracurricularSection";
 import NewsSection from "@/components/section/newsSection";
 import AlumniSection from "@/components/section/alumniSection";
 import FooterSection from "@/components/section/footerSection";
+import LocationSection from "./section/locationSection";
 
 export default function HomePage() {
   return (
@@ -16,7 +17,8 @@ export default function HomePage() {
       <ProfileSection id="profil" />
       <ExtraSection id="ekstrakurikuler" />
       <NewsSection id="berita" />
-      <AlumniSection id="alumni" />
+      {/* <AlumniSection id="alumni" /> */}
+      <LocationSection id="lokasi" />
       <div className="mt-auto">
         <FooterSection />
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-export default function alumniSection({ id }: { id?: string }) {
+export default function AlumniSection({ id }: { id?: string }) {
   const alumniData = [
     {
       name: "Fajar Perkasa",

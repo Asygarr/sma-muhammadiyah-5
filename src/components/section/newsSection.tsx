@@ -1,6 +1,6 @@
 "use client";
 
-export default function newsSection({ id }: { id?: string }) {
+export default function NewsSection({ id }: { id?: string }) {
   const newsData = [
     {
       title:

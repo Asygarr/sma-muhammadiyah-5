@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function heroSection({ id }: { id?: string }) {
+export default function HeroSection({ id }: { id?: string }) {
   return (
     <section
       id={id}
