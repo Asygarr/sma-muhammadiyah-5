@@ -114,7 +114,7 @@ export default function NavbarSection() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col space-y-4 py-6 px-6 md:hidden"
+            className="absolute top-14 left-0 w-full bg-white shadow-md flex flex-col space-y-4 py-6 px-6 md:hidden"
           >
             <a
               href="#beranda"
