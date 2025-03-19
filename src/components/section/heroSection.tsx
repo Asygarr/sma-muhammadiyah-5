@@ -7,7 +7,7 @@ export default function HeroSection({ id }: { id?: string }) {
   return (
     <section
       id={id}
-      className="flex flex-col md:flex-row items-center justify-center gap-12 mt-20 px-6 md:px-12 py-1.5 md:pt-8 max-w-screen-lg mx-auto"
+      className="flex flex-col md:flex-row items-center justify-center gap-12 mt-20 px-6 md:px-12 py-1.5 md:pt-8 pb-16 max-w-screen-lg mx-auto"
     >
       {/* Left Section */}
       <div className="md:w-1/2 text-center md:text-left">
