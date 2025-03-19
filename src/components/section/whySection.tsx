@@ -28,7 +28,7 @@ export default function WhySection() {
   ];
 
   return (
-    <section className="py-16 md:pb-[6rem] bg-white text-center">
+    <section className="py-16 md:py-[6rem] bg-white text-center">
       <div className="container mx-auto px-6">
         <div className="flex justify-center items-center flex-col">
           <div className="w-full md:w-[40rem]">

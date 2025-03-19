@@ -4,7 +4,10 @@ import { IconTarget, IconListCheck } from "@tabler/icons-react";
 
 export default function VisiMisiSection({ id }: { id?: string }) {
   return (
-    <section className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 mt-8">
+    <section
+      id={id}
+      className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 md:py-[6rem] mt-8"
+    >
       <div className="max-w-5xl mx-auto text-center">
         <div className="flex justify-center items-center flex-col px-4">
           <div className="w-full md:w-[40rem]">
