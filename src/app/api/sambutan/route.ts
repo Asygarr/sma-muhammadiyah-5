@@ -9,9 +9,6 @@ import { NextRequest } from "next/server";
 const uploadDir = path.join(process.cwd(), "public/images");
 
 export async function GET(req: NextRequest) {
-  const user = verifyToken(req);
-  if (user instanceof NextResponse) return user; // Jika token tidak valid, kembalikan respons error
-
   try {
     const sambutan = await prisma.sambutan.findFirst();
     return NextResponse.json({ sambutan });
@@ -87,7 +84,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Teks wajib diisi" }, { status: 400 });
     }
 
-    if (text.split(" ").length > 100) {
+    if (text.split(" ").length > 90) {
       return NextResponse.json(
         { error: "Teks tidak boleh lebih dari 80 kata" },
         { status: 400 }

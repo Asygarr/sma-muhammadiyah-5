@@ -1,22 +1,33 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+interface News {
+  id: string;
+  judul: string;
+  text: string;
+  image: string;
+  penulis: string;
+}
+
 export default function NewsSection({ id }: { id?: string }) {
-  const newsData = [
-    {
-      title:
-        "SMA Muhammadiyah 5 Makassar Cetak Alumni Berkualitas, Siap Terima Siswa Baru",
-      description: "SMA Muhammadiyah 5 Makassar siap menerima siswa baru. ",
-      image: "/images/pendaftaran.jpeg",
-      url: "https://www.wartamu.id/sma-muhammadiyah-5-makassar-cetak-alumni-berkualitas-siap-terima-siswa-baru-tahun-ajaran-2024/",
-    },
-    {
-      title: "Detail Profile Sekolah SMA Muhammadiyah 5 Makassar",
-      description:
-        "SMA Muhammadiyah 5 Makassar adalah sekolah yang berada di Makassar.",
-      image: "/images/sekolah-berita.jpeg",
-      url: "https://dapo.dikdasmen.go.id/sekolah/BE8FA5C8A6E159BEF6EC",
-    },
-  ];
+  const [newsData, setNewsData] = useState<News[]>([]);
+
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const res = await fetch("/api/berita", { cache: "no-store" });
+        if (!res.ok) throw new Error("Gagal mengambil berita");
+        const data = await res.json();
+        setNewsData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchNews();
+  }, []);
 
   return (
     <section id={id} className="px-6 md:px-16 py-12 md:py-24">
@@ -33,31 +44,36 @@ export default function NewsSection({ id }: { id?: string }) {
         </div>
       </div>
 
-      {/* Flexbox Container */}
-      <div className="flex flex-wrap justify-center gap-6">
-        {newsData.map((news, index) => (
-          <a
-            key={index}
-            href={news.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-white rounded-lg shadow-md overflow-hidden w-80 flex flex-col"
-          >
-            <img
-              src={news.image}
-              alt={news.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4 flex flex-col flex-grow">
-              <h3 className="font-semibold text-lg flex-grow mb-3">
-                {news.title}
-              </h3>
-              <p className="text-blue-900 font-semibold mt-auto">
-                Baca Selengkapnya
-              </p>
-            </div>
-          </a>
-        ))}
+      {/* Grid Container */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto justify-center items-center">
+        {newsData.length > 0 ? (
+          newsData.map((news) => (
+            <Link
+              key={news.id}
+              href={`/berita/${news.id}`}
+              className="bg-white rounded-lg shadow-md overflow-hidden w-full flex flex-col hover:shadow-lg transition mx-auto"
+            >
+              <img
+                src={news.image}
+                alt="Berita"
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4 flex flex-col flex-grow">
+                <h3 className="font-semibold text-lg flex-grow mb-3">
+                  {news.judul}
+                </h3>
+                <p className="text-sm text-gray-500">Oleh {news.penulis}</p>
+                <p className="text-blue-900 font-semibold mt-auto">
+                  Baca Selengkapnya
+                </p>
+              </div>
+            </Link>
+          ))
+        ) : (
+          <p className="text-gray-500 text-center w-full">
+            Belum ada berita...
+          </p>
+        )}
       </div>
     </section>
   );

@@ -7,11 +7,6 @@ import { verifyToken } from "@/lib/auth";
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
-  const user = await verifyToken(req);
-  if (user === null) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   try {
     const berita = await prisma.berita.findMany({
       orderBy: { createdAt: "desc" },

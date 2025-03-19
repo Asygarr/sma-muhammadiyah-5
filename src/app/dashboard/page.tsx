@@ -135,38 +135,41 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex bg-gray-100">
+    <div className="flex h-screen bg-gray-800">
       {/* Sidebar */}
-      <div className="w-64 h-screen bg-gray-800 text-white p-5">
-        <h2 className="text-xl font-bold mb-4">Dashboard</h2>
-        <ul>
-          <li
-            className={`p-2 cursor-pointer ${
-              activeMenu === "profile" ? "bg-gray-700" : ""
-            }`}
-            onClick={() => setActiveMenu("profile")}
-          >
-            Profil Sekolah
-          </li>
-          <li
-            className={`p-2 cursor-pointer ${
-              activeMenu === "news" ? "bg-gray-700" : ""
-            }`}
-            onClick={() => setActiveMenu("news")}
-          >
-            Tambah Berita
-          </li>
-          <li
-            onClick={handleLogout}
-            className="mb-2 p-2 bg-red-800 hover:bg-red-500 rounded cursor-pointer"
-          >
-            Logout
-          </li>
-        </ul>
+      <div className="w-64 h-[60rem] bg-gray-800 text-white p-5 min-h-screen flex flex-col justify-between">
+        <div>
+          <h2 className="text-xl font-bold mb-4">Dashboard</h2>
+          <ul>
+            <li
+              className={`p-2 cursor-pointer ${
+                activeMenu === "profile" ? "bg-gray-700" : ""
+              }`}
+              onClick={() => setActiveMenu("profile")}
+            >
+              Profil Sekolah
+            </li>
+            <li
+              className={`p-2 cursor-pointer ${
+                activeMenu === "news" ? "bg-gray-700" : ""
+              }`}
+              onClick={() => setActiveMenu("news")}
+            >
+              Tambah Berita
+            </li>
+            <button
+              onClick={handleLogout}
+              className="p-2 mt-8 bg-red-800 hover:bg-red-500 rounded cursor-pointer"
+            >
+              Logout
+            </button>
+          </ul>
+        </div>
       </div>
+
       {/* Main Content */}
       {activeMenu === "profile" && (
-        <div className="flex-1 p-5">
+        <div className="flex-1 p-5 h-[60rem] bg-white">
           <button
             className="sm:hidden mb-4 bg-blue-600 text-white p-2 rounded"
             //   onClick={() => setSidebarOpen(true)}
@@ -209,7 +212,7 @@ export default function Dashboard() {
       )}
 
       {activeMenu === "news" && (
-        <div className="p-5">
+        <div className="p-5 h-[60rem] bg-white">
           <h1 className="text-2xl font-bold mb-4">Tambah Berita</h1>
           <form onSubmit={handleTambahBerita} className="space-y-4">
             <input
@@ -232,7 +235,7 @@ export default function Dashboard() {
               placeholder="Teks berita"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className="w-full p-2 h-[10rem] border rounded"
+              className="w-full p-2 h-[8rem] border rounded"
               required
             />
             <input
@@ -256,8 +259,8 @@ export default function Dashboard() {
             </button>
           </form>
 
-          <h2 className="text-lg font-bold mt-6">Daftar Berita</h2>
-          <table className="w-full border-collapse border border-gray-300 mt-4">
+          <h2 className="text-lg font-bold mt-2">Daftar Berita</h2>
+          <table className="w-full border-collapse border border-gray-300 mt-2">
             <thead>
               <tr className="bg-gray-200">
                 <th className="border border-gray-300 p-2">Judul</th>
