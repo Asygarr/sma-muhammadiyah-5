@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { details } from "framer-motion/client";
 
 const extracurriculars = [
   {
@@ -28,6 +29,14 @@ const extracurriculars = [
     height: 60,
     details:
       "Tapak Suci adalah seni bela diri yang merupakan bagian dari Muhammadiyah, mengajarkan keterampilan fisik sekaligus nilai-nilai spiritual Islam. Ekstrakurikuler ini bertujuan membentuk siswa yang tangguh, disiplin, serta berakhlak mulia. Kegiatan dalam Tapak Suci meliputi latihan bela diri, penguatan mental, pengembangan karakter, serta kompetisi kejuaraan. Selain melatih keterampilan bertahan dan menyerang, Tapak Suci juga menanamkan nilai sportivitas, kepemimpinan, dan ketahanan diri, sehingga siswa dapat tumbuh menjadi pribadi yang kuat secara fisik dan spiritual.",
+  },
+  {
+    name: "Futsal",
+    image: "/images/Logo_Futsal.png",
+    width: 60,
+    height: 60,
+    details:
+      "Futsal adalah olahraga sepak bola dalam ruangan yang dimainkan oleh dua tim masing-masing lima pemain. Ekstrakurikuler futsal bertujuan mengembangkan keterampilan teknik sepak bola, fisik, serta kerjasama tim. Kegiatan dalam futsal meliputi latihan teknik dasar, taktik permainan, serta kompetisi antar tim. Melalui futsal, siswa diajarkan untuk berlatih keras, bekerja sama dalam tim, serta menghargai kerja keras dan sportivitas lawan. Futsal juga membantu siswa menjaga kesehatan fisik, meningkatkan kebugaran, serta mengasah keterampilan bermain bola.",
   },
 ];
 

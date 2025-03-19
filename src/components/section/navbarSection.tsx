@@ -17,8 +17,7 @@ export default function NavbarSection() {
         alt="logo"
         width={38}
         height={38}
-        className="md:h-[50px] md:w-[50px]"
-        layout="intrinsic"
+        className="md:h-[60px] md:w-[50px]"
       />
 
       {/* Menu - Desktop */}
