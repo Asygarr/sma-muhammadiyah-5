@@ -4,12 +4,16 @@ import { NextRequest } from "next/server";
 
 const prisma = new PrismaClient();
 
+interface Context {
+  params: { id: string };
+}
+
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-): Promise<Response> {
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = params; // Destructuring langsung
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json(
