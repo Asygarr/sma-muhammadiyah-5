@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { NextRequest } from "next/server";
 
 const prisma = new PrismaClient();
 
 export async function GET(
-  req: Request,
-  context: { params: { id: string } }
+  req: NextRequest,
+  { params }: { params: { id: string } }
 ): Promise<Response> {
   try {
-    const { id } = await context.params;
+    const { id } = params; // Destructuring langsung
 
     if (!id) {
       return NextResponse.json(
