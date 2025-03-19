@@ -51,7 +51,7 @@ export default function NewsSection({ id }: { id?: string }) {
             <Link
               key={news.id}
               href={`/berita/${news.id}`}
-              className="bg-white rounded-lg shadow-md overflow-hidden w-80 flex flex-col hover:shadow-lg transition"
+              className="bg-white rounded-lg shadow-xl overflow-hidden w-80 flex flex-col hover:shadow-lg transition"
             >
               <img
                 src={news.image}

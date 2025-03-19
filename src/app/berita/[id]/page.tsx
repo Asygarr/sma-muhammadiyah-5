@@ -1,12 +1,20 @@
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 
-export default async function page({ params }: { params: { id: string } }) {
+interface PageParams {
+  params: {
+    id: string;
+  };
+}
+
+export default async function page({ params }: PageParams) {
+  const { id } = await params;
+
   const host = (await headers()).get("host");
   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
   const baseUrl = `${protocol}://${host}`;
 
-  const res = await fetch(`${baseUrl}/api/berita/${params.id}`);
+  const res = await fetch(`${baseUrl}/api/berita/${id}`);
 
   if (!res.ok) {
     return notFound();

@@ -3,11 +3,12 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET(req: Request, context: { params: { id: string } }) {
-  console.log("params", context.params);
-
+export async function GET(
+  req: Request,
+  context: { params: { id: string } }
+): Promise<Response> {
   try {
-    const { id } = context.params;
+    const { id } = await context.params;
 
     if (!id) {
       return NextResponse.json(
