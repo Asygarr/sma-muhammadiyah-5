@@ -9,7 +9,7 @@ import {
 
 export default function FooterSection() {
   return (
-    <footer className="bg-blue-700 text-white py-6 px-6 md:px-10">
+    <footer className="bg-blue-900 text-white py-6 px-6 md:px-10">
       <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-6">
         {/* Bagian Kiri */}
         <div className="md:w-[30rem] pt-2 text-center md:text-left">

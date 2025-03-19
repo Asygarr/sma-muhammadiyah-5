@@ -1,6 +1,7 @@
 import Navbar from "@/components/section/navbarSection";
 import Hero from "@/components/section/heroSection";
 import WhySection from "@/components/section/whySection";
+import VisiMisiSection from "./section/visiMisiSection";
 import ProfileSection from "@/components/section/profileSection";
 import ExtraSection from "@/components/section/extracurricularSection";
 import NewsSection from "@/components/section/newsSection";
@@ -13,7 +14,8 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <Hero id="beranda" />
-      <WhySection id="tentangKami" />
+      <VisiMisiSection id="tentangKami" />
+      <WhySection />
       <ProfileSection id="profil" />
       <ExtraSection id="ekstrakurikuler" />
       <NewsSection id="berita" />

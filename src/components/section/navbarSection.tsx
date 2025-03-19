@@ -3,19 +3,23 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function NavbarSection() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string>("beranda"); // Default aktif di "beranda"
 
   return (
-    <nav className="bg-white shadow-md px-6 md:px-12 py-5 flex justify-between items-center fixed w-full z-50">
+    <nav className="bg-white shadow-md px-6 md:px-20 py-1 flex justify-between items-center fixed w-full z-50">
       {/* Logo */}
-      <a href="/" className="text-base md:text-2xl font-bold">
-        <span className="text-black">SMA </span>
-        <span className="text-blue-600">MUHAMMADIYAH </span>
-        <span className="text-black">5 </span>
-      </a>
+      <Image
+        src="/images/logo-sekolah.png"
+        alt="logo"
+        width={38}
+        height={38}
+        className="md:h-[50px] md:w-[50px]"
+        layout="intrinsic"
+      />
 
       {/* Menu - Desktop */}
       <div className="hidden md:flex space-x-6 font-medium">
@@ -24,8 +28,8 @@ export default function NavbarSection() {
           onClick={() => setActiveSection("beranda")}
           className={`${
             activeSection === "beranda"
-              ? "text-blue-600 font-semibold"
-              : "hover:text-blue-600"
+              ? "text-blue-900 font-semibold"
+              : "hover:text-blue-900"
           }`}
         >
           Beranda
@@ -35,8 +39,8 @@ export default function NavbarSection() {
           onClick={() => setActiveSection("tentangKami")}
           className={`${
             activeSection === "tentangKami"
-              ? "text-blue-600 font-semibold"
-              : "hover:text-blue-600"
+              ? "text-blue-900 font-semibold"
+              : "hover:text-blue-900"
           }`}
         >
           Tentang Kami
@@ -46,8 +50,8 @@ export default function NavbarSection() {
           onClick={() => setActiveSection("profil")}
           className={`${
             activeSection === "profil"
-              ? "text-blue-600 font-semibold"
-              : "hover:text-blue-600"
+              ? "text-blue-900 font-semibold"
+              : "hover:text-blue-900"
           }`}
         >
           Profil
@@ -57,8 +61,8 @@ export default function NavbarSection() {
           onClick={() => setActiveSection("ekstrakurikuler")}
           className={`${
             activeSection === "ekstrakurikuler"
-              ? "text-blue-600 font-semibold"
-              : "hover:text-blue-600"
+              ? "text-blue-900 font-semibold"
+              : "hover:text-blue-900"
           }`}
         >
           Ekstrakurikuler
@@ -68,8 +72,8 @@ export default function NavbarSection() {
           onClick={() => setActiveSection("berita")}
           className={`${
             activeSection === "berita"
-              ? "text-blue-600 font-semibold"
-              : "hover:text-blue-600"
+              ? "text-blue-900 font-semibold"
+              : "hover:text-blue-900"
           }`}
         >
           Berita
@@ -79,8 +83,8 @@ export default function NavbarSection() {
           onClick={() => setActiveSection("alumni")}
           className={`${
             activeSection === "alumni"
-              ? "text-blue-600 font-semibold"
-              : "hover:text-blue-600"
+              ? "text-blue-900 font-semibold"
+              : "hover:text-blue-900"
           }`}
         >
           Alumni
@@ -90,8 +94,8 @@ export default function NavbarSection() {
           onClick={() => setActiveSection("lokasi")}
           className={`${
             activeSection === "lokasi"
-              ? "text-blue-600 font-semibold"
-              : "hover:text-blue-600"
+              ? "text-blue-900 font-semibold"
+              : "hover:text-blue-900"
           }`}
         >
           Lokasi
@@ -119,7 +123,7 @@ export default function NavbarSection() {
                 setIsOpen(false);
               }}
               className={`${
-                activeSection === "beranda" ? "text-blue-600 font-semibold" : ""
+                activeSection === "beranda" ? "text-blue-900 font-semibold" : ""
               }`}
             >
               Beranda
@@ -132,7 +136,7 @@ export default function NavbarSection() {
               }}
               className={`${
                 activeSection === "tentangKami"
-                  ? "text-blue-600 font-semibold"
+                  ? "text-blue-900 font-semibold"
                   : ""
               }`}
             >
@@ -145,7 +149,7 @@ export default function NavbarSection() {
                 setIsOpen(false);
               }}
               className={`${
-                activeSection === "profil" ? "text-blue-600 font-semibold" : ""
+                activeSection === "profil" ? "text-blue-900 font-semibold" : ""
               }`}
             >
               Profil
@@ -158,7 +162,7 @@ export default function NavbarSection() {
               }}
               className={`${
                 activeSection === "ekstrakurikuler"
-                  ? "text-blue-600 font-semibold"
+                  ? "text-blue-900 font-semibold"
                   : ""
               }`}
             >
@@ -171,7 +175,7 @@ export default function NavbarSection() {
                 setIsOpen(false);
               }}
               className={`${
-                activeSection === "berita" ? "text-blue-600 font-semibold" : ""
+                activeSection === "berita" ? "text-blue-900 font-semibold" : ""
               }`}
             >
               Berita
@@ -183,7 +187,7 @@ export default function NavbarSection() {
                 setIsOpen(false);
               }}
               className={`${
-                activeSection === "alumni" ? "text-blue-600 font-semibold" : ""
+                activeSection === "alumni" ? "text-blue-900 font-semibold" : ""
               }`}
             >
               Alumni
@@ -195,7 +199,7 @@ export default function NavbarSection() {
                 setIsOpen(false);
               }}
               className={`${
-                activeSection === "lokasi" ? "text-blue-600 font-semibold" : ""
+                activeSection === "lokasi" ? "text-blue-900 font-semibold" : ""
               }`}
             >
               Lokasi

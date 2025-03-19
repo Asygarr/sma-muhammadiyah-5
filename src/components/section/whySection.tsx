@@ -6,35 +6,35 @@ import {
   IconSchool,
 } from "@tabler/icons-react";
 
-export default function WhySection({ id }: { id?: string }) {
+export default function WhySection() {
   const features = [
     {
       icon: (
-        <IconDeviceLaptop size={48} stroke={1.5} className="text-blue-600" />
+        <IconDeviceLaptop size={48} stroke={1.5} className="text-blue-900" />
       ),
       title: "Fasilitas Memadai",
       description: "Penunjang belajar dengan kualitas terbaik",
     },
     {
-      icon: <IconBuilding size={48} stroke={1.5} className="text-blue-600" />,
+      icon: <IconBuilding size={48} stroke={1.5} className="text-blue-900" />,
       title: "Lingkungan Nyaman",
       description: "Berada di lingkungan yang nyaman dan asri",
     },
     {
-      icon: <IconSchool size={48} stroke={1.5} className="text-blue-600" />,
+      icon: <IconSchool size={48} stroke={1.5} className="text-blue-900" />,
       title: "Pengajar Kompeten",
       description: "Guru terbaik dengan pengalaman",
     },
   ];
 
   return (
-    <section id={id} className="py-16 md:py-[6rem] bg-white text-center">
+    <section className="py-16 md:pb-[6rem] bg-white text-center">
       <div className="container mx-auto px-6">
         <div className="flex justify-center items-center flex-col">
           <div className="w-full md:w-[40rem]">
             <h2 className="text-2xl md:text-4xl font-bold">
               Kenapa Harus{" "}
-              <span className="text-blue-600">SMA Muhammadiyah 5</span>{" "}
+              <span className="text-blue-900">SMA Muhammadiyah 5</span>{" "}
               Makassar?
             </h2>
           </div>

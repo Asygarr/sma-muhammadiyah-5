@@ -12,7 +12,7 @@ export default function HeroSection({ id }: { id?: string }) {
       {/* Left Section */}
       <div className="md:w-1/2 text-center md:text-left">
         <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900">
-          SMA <span className="text-blue-600">Muhammadiyah</span> 5 Makassar
+          SMA <span className="text-blue-900">Muhammadiyah</span> 5 Makassar
         </h1>
         <p className="text-base text-gray-600 mt-4 md:text-lg">
           SMA Muhammadiyah 5 Makassar adalah sekolah yang mencetak siswa
@@ -23,7 +23,7 @@ export default function HeroSection({ id }: { id?: string }) {
         <div className="mt-6 flex justify-center md:justify-start">
           <Link
             href="#tentangKami"
-            className="text-xs md:text-sm px-4 py-3 bg-blue-600 text-white md:px-6 md:py-3 rounded-full font-semibold shadow-md hover:bg-blue-700"
+            className="text-xs md:text-sm px-4 py-3 bg-blue-900 text-white md:px-6 md:py-3 rounded-full font-semibold shadow-md hover:bg-blue-600"
           >
             Lihat Selengkapnya
           </Link>

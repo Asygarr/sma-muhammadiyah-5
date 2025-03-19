@@ -25,7 +25,7 @@ export default function NewsSection({ id }: { id?: string }) {
         <div className="w-full md:w-[40rem] text-center mb-8">
           <h2 className="text-2xl md:text-4xl font-bold">
             Berita Terbaru Di{" "}
-            <span className="text-blue-600">SMA Muhammadiyah 5</span> Makassar
+            <span className="text-blue-900">SMA Muhammadiyah 5</span> Makassar
           </h2>
           <p className="text-gray-600 mt-2">
             Berita Terbaru Tentang SMA Muhammadiyah 5 Makassar.
@@ -52,7 +52,7 @@ export default function NewsSection({ id }: { id?: string }) {
               <h3 className="font-semibold text-lg flex-grow mb-3">
                 {news.title}
               </h3>
-              <p className="text-blue-600 font-semibold mt-auto">
+              <p className="text-blue-900 font-semibold mt-auto">
                 Baca Selengkapnya
               </p>
             </div>

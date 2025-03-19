@@ -43,7 +43,7 @@ export default function ExtracurricularSection({ id }: { id?: string }) {
           <div className="w-full md:w-[40rem] text-center mb-8">
             <h2 className="text-2xl md:text-4xl font-bold">
               Ekstrakurikuler Di{" "}
-              <span className="text-blue-600">SMA Muhammadiyah 5</span> Makassar
+              <span className="text-blue-900">SMA Muhammadiyah 5</span> Makassar
             </h2>
             <p className="text-gray-600 mt-5">
               Pilihan Ekstrakurikuler di SMA Muhammadiyah 5 Makassar.
@@ -72,7 +72,7 @@ export default function ExtracurricularSection({ id }: { id?: string }) {
               </p>
               <button
                 onClick={() => setSelectedExtracurricular(item)}
-                className="text-blue-600 font-semibold mt-auto self-start"
+                className="text-blue-900 font-semibold mt-auto self-start"
               >
                 Details
               </button>
