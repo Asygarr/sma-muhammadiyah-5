@@ -23,12 +23,11 @@ export default async function page({ params }: { params: { id: string } }) {
           alt="Berita"
           className="w-full h-full object-cover rounded-lg shadow-lg"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg">
-          <h1 className="text-3xl md:text-4xl font-bold text-white text-center px-4">
-            {berita.judul}
-          </h1>
-        </div>
+        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg"></div>
       </div>
+
+      {/* Judul Berita */}
+      <h1 className="text-3xl font-bold mb-4">{berita.judul}</h1>
 
       {/* Informasi Penulis & Tanggal */}
       <div className="mb-6">

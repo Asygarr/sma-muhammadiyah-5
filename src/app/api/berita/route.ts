@@ -87,7 +87,11 @@ export async function DELETE(req: NextRequest) {
 
     // hapus foto di local storage
     const fullPath = path.join(process.cwd(), "public", berita.image);
-    await unlink(fullPath);
+    try {
+      await unlink(fullPath);
+    } catch (error) {
+      console.error("Error deleting file:", error);
+    }
 
     await prisma.berita.delete({ where: { id } });
     return NextResponse.json({ message: "Berita berhasil dihapus" });

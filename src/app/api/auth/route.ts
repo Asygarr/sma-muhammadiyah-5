@@ -1,43 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { SignJWT, jwtVerify } from "jose";
+import { SignJWT } from "jose";
 import prisma from "@/lib/prisma";
 
 const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET);
 
-// export async function POST(req: NextRequest) {
-//   try {
-//     const { username, password } = await req.json();
+export async function POST(req: NextRequest) {
+  try {
+    const { username, password } = await req.json();
 
-//     // Cek apakah username sudah ada
-//     const existingUser = await prisma.admin.findUnique({ where: { username } });
+    // Cek apakah username sudah ada
+    const existingUser = await prisma.admin.findUnique({ where: { username } });
 
-//     if (existingUser) {
-//       return NextResponse.json(
-//         { error: "Username sudah digunakan" },
-//         { status: 400 }
-//       );
-//     }
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Username sudah digunakan" },
+        { status: 400 }
+      );
+    }
 
-//     // Hash password sebelum disimpan
-//     const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash password sebelum disimpan
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-//     // Simpan user ke database
-//     const newUser = await prisma.admin.create({
-//       data: { username, password: hashedPassword },
-//     });
+    // Simpan user ke database
+    const newUser = await prisma.admin.create({
+      data: { username, password: hashedPassword },
+    });
 
-//     return NextResponse.json(
-//       { message: "User berhasil didaftarkan", user: newUser },
-//       { status: 201 }
-//     );
-//   } catch (error) {
-//     return NextResponse.json(
-//       { error: "Terjadi kesalahan saat registrasi" },
-//       { status: 500 }
-//     );
-//   }
-// }
+    return NextResponse.json(
+      { message: "User berhasil didaftarkan", user: newUser },
+      { status: 201 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Terjadi kesalahan saat registrasi" },
+      { status: 500 }
+    );
+  }
+}
 
 export async function PUT(req: NextRequest) {
   try {

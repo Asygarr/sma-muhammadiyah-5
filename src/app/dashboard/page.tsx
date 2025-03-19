@@ -139,7 +139,7 @@ export default function Dashboard() {
       {/* Sidebar */}
       <div className="w-64 h-[60rem] bg-gray-800 text-white p-5 min-h-screen flex flex-col justify-between">
         <div>
-          <h2 className="text-xl font-bold mb-4">Dashboard</h2>
+          <h2 className="text-xl font-bold mb-4">Admin</h2>
           <ul>
             <li
               className={`p-2 cursor-pointer ${
@@ -235,7 +235,7 @@ export default function Dashboard() {
               placeholder="Teks berita"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className="w-full p-2 h-[8rem] border rounded"
+              className="w-full p-2 h-[15rem] border rounded"
               required
             />
             <input
