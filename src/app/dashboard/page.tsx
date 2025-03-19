@@ -137,7 +137,7 @@ export default function Dashboard() {
   return (
     <div className="flex h-screen bg-gray-800">
       {/* Sidebar */}
-      <div className="w-64 h-[60rem] bg-gray-800 text-white p-5 min-h-screen flex flex-col justify-between">
+      <div className="w-64 h-[70rem] bg-gray-800 text-white p-5 min-h-screen flex flex-col justify-between">
         <div>
           <h2 className="text-xl font-bold mb-4">Admin</h2>
           <ul>
@@ -169,27 +169,31 @@ export default function Dashboard() {
 
       {/* Main Content */}
       {activeMenu === "profile" && (
-        <div className="flex-1 p-5 h-[60rem] bg-white">
+        <div className="flex-1 p-5 h-[70rem] bg-white">
           <button
             className="sm:hidden mb-4 bg-blue-600 text-white p-2 rounded"
             //   onClick={() => setSidebarOpen(true)}
           >
             <IconMenu size={24} />
           </button>
-          <h1 className="text-2xl font-bold mb-4">Profil Sekolah</h1>
+          <h1 className="text-2xl font-bold mb-4">Profil Kepala Sekolah</h1>
           <form
             onSubmit={handleUpdate}
             className="space-y-4 bg-white p-6 shadow rounded-lg"
           >
             <textarea
-              placeholder="Teks sambutan (max 100 kata)"
+              placeholder="Teks sambutan kepala sekolah (max 100 kata)"
               value={textForProfile}
               onChange={(e) => setTextForProfile(e.target.value)}
               className="w-full p-2 h-[20rem] border rounded"
               required
             />
+            <label className="text-sm font-bold">
+              Upload foto Kepala Sekolah :
+            </label>
             <input
               type="file"
+              placeholder="Foto kepala sekolah"
               accept="image/*"
               onChange={handleImageChange}
               className="w-full p-2 border rounded"
@@ -212,7 +216,7 @@ export default function Dashboard() {
       )}
 
       {activeMenu === "news" && (
-        <div className="p-5 h-[60rem] bg-white">
+        <div className="p-5 h-[70rem] bg-white">
           <h1 className="text-2xl font-bold mb-4">Tambah Berita</h1>
           <form onSubmit={handleTambahBerita} className="space-y-4">
             <input
@@ -238,6 +242,7 @@ export default function Dashboard() {
               className="w-full p-2 h-[15rem] border rounded"
               required
             />
+            <label className="text-sm font-bold">Upload foto berita : </label>
             <input
               type="file"
               accept="image/*"
@@ -259,32 +264,36 @@ export default function Dashboard() {
             </button>
           </form>
 
-          <h2 className="text-lg font-bold mt-2">Daftar Berita</h2>
-          <table className="w-full border-collapse border border-gray-300 mt-2">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="border border-gray-300 p-2">Judul</th>
-                <th className="border border-gray-300 p-2">Penulis</th>
-                <th className="border border-gray-300 p-2">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {berita.map((item) => (
-                <tr key={item.id} className="text-center">
-                  <td className="border border-gray-300 p-2">{item.judul}</td>
-                  <td className="border border-gray-300 p-2">{item.penulis}</td>
-                  <td className="border border-gray-300 p-2">
-                    <button
-                      onClick={() => handleDeleteBerita(item.id)}
-                      className="bg-red-500 text-white px-4 py-1 rounded"
-                    >
-                      Hapus
-                    </button>
-                  </td>
+          <div className="overflow-x-auto max-h-80 overflow-y-auto">
+            <h2 className="text-lg font-bold mt-2">Daftar Berita</h2>
+            <table className="w-full border-collapse border border-gray-300 mt-2 min-w-max">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="border border-gray-300 p-2">Judul</th>
+                  <th className="border border-gray-300 p-2">Penulis</th>
+                  <th className="border border-gray-300 p-2">Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {berita.map((item) => (
+                  <tr key={item.id} className="text-center">
+                    <td className="border border-gray-300 p-2">{item.judul}</td>
+                    <td className="border border-gray-300 p-2">
+                      {item.penulis}
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                      <button
+                        onClick={() => handleDeleteBerita(item.id)}
+                        className="bg-red-500 text-white px-4 py-1 rounded"
+                      >
+                        Hapus
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
