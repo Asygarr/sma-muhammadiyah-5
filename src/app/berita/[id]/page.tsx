@@ -1,13 +1,11 @@
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 
-interface PageParams {
-  params: {
-    id: string;
-  };
-}
-
-export default async function page({ params }: PageParams) {
+export default async function page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
   const host = (await headers()).get("host");
