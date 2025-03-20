@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const user = await verifyToken(req);
-  if (user === null) {
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -48,19 +48,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Simpan gambar di public/uploads
-    const filePath = `/uploads/${Date.now()}-${image.name}`;
-    const fullPath = path.join(process.cwd(), "public", filePath);
-    await writeFile(fullPath, Buffer.from(await image.arrayBuffer()));
+    // **Penyimpanan sementara di /tmp (bukan di public/)**
+    const filePath = `/tmp/${Date.now()}-${image.name}`;
+    await writeFile(filePath, Buffer.from(await image.arrayBuffer()));
+
+    // **Jika ingin menyimpan di cloud storage, upload ke layanan eksternal di sini**
+    // Contoh upload ke Cloudinary, Supabase Storage, atau Firebase Storage
 
     // Simpan data berita ke database
     const berita = await prisma.berita.create({
-      data: { judul: judul, image: filePath, penulis: penulis, text: text },
+      data: { judul, image: filePath, penulis, text },
     });
 
     return NextResponse.json(berita, { status: 201 });
   } catch (error) {
-    console.log(error);
+    console.error("Error saat menyimpan berita:", error);
 
     return NextResponse.json(
       { message: "Gagal menyimpan berita" },
@@ -72,7 +74,7 @@ export async function POST(req: NextRequest) {
 // delete berita
 export async function DELETE(req: NextRequest) {
   const user = await verifyToken(req);
-  if (user === null) {
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -87,17 +89,20 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    // hapus foto di local storage
-    const fullPath = path.join(process.cwd(), "public", berita.image);
-    try {
-      await unlink(fullPath);
-    } catch (error) {
-      console.error("Error deleting file:", error);
+    if (berita.image.startsWith("/tmp/")) {
+      try {
+        await unlink(berita.image);
+      } catch (error) {
+        console.warn("Gambar tidak ditemukan atau sudah terhapus:", error);
+      }
     }
 
+    // Hapus berita dari database
     await prisma.berita.delete({ where: { id } });
+
     return NextResponse.json({ message: "Berita berhasil dihapus" });
   } catch (error) {
+    console.error("Error menghapus berita:", error);
     return NextResponse.json(
       { message: "Gagal menghapus berita" },
       { status: 500 }

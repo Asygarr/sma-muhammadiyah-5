@@ -71,14 +71,14 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const user = await verifyToken(req);
-  if (user === null) {
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
     const formData = await req.formData();
     const file = formData.get("image") as File | null;
-    const text = formData.get("text") as string;
+    const text = formData.get("text")?.toString();
 
     if (!text) {
       return NextResponse.json({ error: "Teks wajib diisi" }, { status: 400 });
@@ -102,23 +102,30 @@ export async function PUT(req: NextRequest) {
     let newImageUrl = sambutan.imageUrl;
 
     if (file) {
-      const oldImagePath = path.join(
-        process.cwd(),
-        "public",
-        sambutan.imageUrl
-      );
-      if (fs.existsSync(oldImagePath)) {
-        await unlink(oldImagePath);
+      // Hapus gambar lama jika tersimpan secara lokal di /tmp/
+      if (sambutan.imageUrl.startsWith("/tmp/")) {
+        try {
+          await unlink(sambutan.imageUrl);
+        } catch (error) {
+          console.warn(
+            "Gambar lama tidak ditemukan atau sudah terhapus:",
+            error
+          );
+        }
+      } else {
+        // Jika gambar ada di cloud, tambahkan logika penghapusan di Cloudinary/Firebase/S3
       }
 
+      // Simpan gambar baru di folder /tmp/ (hanya sementara)
       const fileBuffer = Buffer.from(await file.arrayBuffer());
       const fileName = `${Date.now()}_${file.name}`;
-      const filePath = path.join(uploadDir, fileName);
-      await writeFile(filePath, fileBuffer);
+      const filePath = path.join("/tmp", fileName);
+      await fs.promises.writeFile(filePath, fileBuffer);
 
-      newImageUrl = `/images/${fileName}`;
+      newImageUrl = `/tmp/${fileName}`; // Simpan path sementara
     }
 
+    // Update data sambutan di database
     const updatedSambutan = await prisma.sambutan.update({
       where: { id: sambutan.id },
       data: {
@@ -132,7 +139,7 @@ export async function PUT(req: NextRequest) {
       updatedSambutan,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error memperbarui sambutan:", error);
     return NextResponse.json(
       { error: "Terjadi kesalahan server" },
       { status: 500 }
