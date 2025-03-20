@@ -25,7 +25,7 @@ export default function Dashboard() {
   const [preview, setPreview] = useState("");
   const [berita, setBerita] = useState<Berita[]>([]);
 
-  const [activeMenu, setActiveMenu] = useState("profile");
+  const [activeMenu, setActiveMenu] = useState("news");
   const router = useRouter();
 
   useEffect(() => {
@@ -143,19 +143,19 @@ export default function Dashboard() {
           <ul>
             <li
               className={`p-2 cursor-pointer ${
-                activeMenu === "profile" ? "bg-gray-700" : ""
-              }`}
-              onClick={() => setActiveMenu("profile")}
-            >
-              Profil Sekolah
-            </li>
-            <li
-              className={`p-2 cursor-pointer ${
                 activeMenu === "news" ? "bg-gray-700" : ""
               }`}
               onClick={() => setActiveMenu("news")}
             >
               Tambah Berita
+            </li>
+            <li
+              className={`p-2 cursor-pointer ${
+                activeMenu === "profile" ? "bg-gray-700" : ""
+              }`}
+              onClick={() => setActiveMenu("profile")}
+            >
+              Profil Kepsek
             </li>
             <button
               onClick={handleLogout}
@@ -181,13 +181,6 @@ export default function Dashboard() {
             onSubmit={handleUpdate}
             className="space-y-4 bg-white p-6 shadow rounded-lg"
           >
-            <textarea
-              placeholder="Teks sambutan kepala sekolah (max 100 kata)"
-              value={textForProfile}
-              onChange={(e) => setTextForProfile(e.target.value)}
-              className="w-full p-2 h-[20rem] border rounded"
-              required
-            />
             <label className="text-sm font-bold">
               Upload foto Kepala Sekolah :
             </label>
@@ -205,6 +198,13 @@ export default function Dashboard() {
                 className="w-full h-40 object-cover mt-2 rounded"
               />
             )}
+            <textarea
+              placeholder="Teks sambutan kepala sekolah (max 100 kata)"
+              value={textForProfile}
+              onChange={(e) => setTextForProfile(e.target.value)}
+              className="w-full p-2 h-[20rem] border rounded"
+              required
+            />
             <button
               type="submit"
               className="w-full bg-green-500 text-white p-2 rounded"
@@ -219,6 +219,20 @@ export default function Dashboard() {
         <div className="p-5 h-[70rem] bg-white">
           <h1 className="text-2xl font-bold mb-4">Tambah Berita</h1>
           <form onSubmit={handleTambahBerita} className="space-y-4">
+            <label className="text-sm font-bold">Upload foto berita : </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChangeBerita}
+              className="w-full p-2 border rounded"
+            />
+            {preview && (
+              <img
+                src={preview}
+                alt="Preview"
+                className="w-full h-40 object-cover mt-2"
+              />
+            )}
             <input
               type="text"
               placeholder="Judul Berita"
@@ -242,20 +256,6 @@ export default function Dashboard() {
               className="w-full p-2 h-[15rem] border rounded"
               required
             />
-            <label className="text-sm font-bold">Upload foto berita : </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChangeBerita}
-              className="w-full p-2 border rounded"
-            />
-            {preview && (
-              <img
-                src={preview}
-                alt="Preview"
-                className="w-full h-40 object-cover mt-2"
-              />
-            )}
             <button
               type="submit"
               className="w-full bg-blue-500 text-white p-2 rounded"
