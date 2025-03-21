@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     }
 
     const totalBerita = await prisma.berita.count();
-    if (totalBerita >= 20) {
+    if (totalBerita >= 12) {
       return NextResponse.json(
         { error: "Maksimal berita yang dapat ditambahkan adalah 20" },
         { status: 400 }
