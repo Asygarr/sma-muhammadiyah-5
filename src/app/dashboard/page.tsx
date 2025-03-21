@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { IconMenu, IconX } from "@tabler/icons-react";
+import { motion } from "framer-motion";
 
 type Berita = {
   id: string;
@@ -24,6 +25,7 @@ export default function Dashboard() {
   const [berita, setBerita] = useState<Berita[]>([]);
   const [activeMenu, setActiveMenu] = useState("news");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,6 +45,7 @@ export default function Dashboard() {
 
   const handleUpdateProfile = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     const token = localStorage.getItem("token");
 
     const formData = new FormData();
@@ -55,6 +58,7 @@ export default function Dashboard() {
       body: formData,
     });
 
+    setLoading(false);
     if (res.ok) {
       alert("Data berhasil diperbarui!");
     } else {
@@ -84,6 +88,8 @@ export default function Dashboard() {
 
   const handleTambahBerita = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
+
     const formData = new FormData();
     if (image) formData.append("image", image);
     formData.append("judul", judul);
@@ -98,6 +104,7 @@ export default function Dashboard() {
       },
     });
 
+    setLoading(false);
     if (res.ok) {
       alert("Berita berhasil ditambahkan!");
       fetchBerita();
@@ -173,6 +180,16 @@ export default function Dashboard() {
           Logout
         </button>
       </div>
+
+      {loading && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 1 }}
+            className="w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full"
+          ></motion.div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div className="flex-1 p-5 h-screen overflow-y-auto">

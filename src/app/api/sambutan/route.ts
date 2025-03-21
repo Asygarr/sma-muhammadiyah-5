@@ -17,54 +17,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// export async function POST(req: NextRequest) {
-//   const user = verifyToken(req);
-//   if (user instanceof NextResponse) return user;
-
-//   try {
-//     const formData = await req.formData();
-//     const file = formData.get("image") as File;
-//     const text = formData.get("text") as string;
-
-//     if (!file || !text) {
-//       return NextResponse.json(
-//         { error: "Gambar dan teks wajib diisi" },
-//         { status: 400 }
-//       );
-//     }
-
-//     if (text.split(" ").length > 100) {
-//       return NextResponse.json(
-//         { error: "Teks tidak boleh lebih dari 80 kata" },
-//         { status: 400 }
-//       );
-//     }
-
-//     const fileBuffer = Buffer.from(await file.arrayBuffer());
-//     const fileName = `${Date.now()}_${file.name}`;
-//     const filePath = path.join(uploadDir, fileName);
-//     await writeFile(filePath, fileBuffer);
-
-//     const sambutan = await prisma.sambutan.create({
-//       data: {
-//         imageUrl: `/images/${fileName}`,
-//         text: text,
-//       },
-//     });
-
-//     return NextResponse.json(
-//       { message: "Data berhasil disimpan", sambutan },
-//       { status: 201 }
-//     );
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json(
-//       { error: "Terjadi kesalahan server" },
-//       { status: 500 }
-//     );
-//   }
-// }
-
 export async function PUT(req: NextRequest) {
   const user = await verifyToken(req);
   if (!user) {
@@ -121,10 +73,9 @@ export async function PUT(req: NextRequest) {
         access: "public",
       });
 
-      newImageUrl = url; // Simpan URL gambar baru dari Vercel Blob
+      newImageUrl = url;
     }
 
-    // Update data sambutan di database
     const updatedSambutan = await prisma.sambutan.update({
       where: { id: sambutan.id },
       data: {

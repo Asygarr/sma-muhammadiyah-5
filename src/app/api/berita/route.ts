@@ -39,18 +39,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (title.split(" ").length > 25) {
+      return NextResponse.json(
+        { error: "Judul tidak boleh lebih dari 25 kata" },
+        { status: 400 }
+      );
+    }
+
+    const totalBerita = await prisma.berita.count();
+    if (totalBerita >= 20) {
+      return NextResponse.json(
+        { error: "Maksimal berita yang dapat ditambahkan adalah 20" },
+        { status: 400 }
+      );
+    }
+
     let imageUrl = "";
 
     if (file) {
       const fileBuffer = Buffer.from(await file.arrayBuffer());
       const fileName = `articles/${Date.now()}_${file.name}`;
 
-      // Upload ke Vercel Blob
       const { url } = await put(fileName, fileBuffer, { access: "public" });
       imageUrl = url;
     }
 
-    // Simpan berita ke database
     const newBerita = await prisma.berita.create({
       data: {
         judul: title,
@@ -73,7 +86,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// delete berita
 export async function DELETE(req: NextRequest) {
   const user = await verifyToken(req);
   if (!user) {
@@ -91,7 +103,6 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    // Jika berita memiliki gambar di Vercel Blob, hapus dari storage
     if (berita.image.startsWith("https://")) {
       try {
         await del(berita.image);
@@ -100,7 +111,6 @@ export async function DELETE(req: NextRequest) {
       }
     }
 
-    // Hapus berita dari database
     await prisma.berita.delete({ where: { id } });
 
     return NextResponse.json({ message: "Berita berhasil dihapus" });
