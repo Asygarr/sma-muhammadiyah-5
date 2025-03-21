@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { writeFile, unlink } from "fs/promises";
-import path from "path";
+import { put, del } from "@vercel/blob";
 import { verifyToken } from "@/lib/auth";
 
 const prisma = new PrismaClient();
@@ -28,44 +27,47 @@ export async function POST(req: NextRequest) {
 
   try {
     const formData = await req.formData();
-    const judul = formData.get("judul")?.toString();
-    const image = formData.get("image") as File;
-    const penulis = formData.get("penulis")?.toString();
-    const text = formData.get("text")?.toString();
+    const file = formData.get("image") as File | null;
+    const title = formData.get("judul") as string;
+    const penulis = formData.get("penulis") as string;
+    const content = formData.get("content") as string;
 
-    if (!text || !penulis || !image || !judul) {
+    if (!title || !content) {
       return NextResponse.json(
-        { message: "Semua field harus diisi" },
+        { error: "Judul dan konten wajib diisi" },
         { status: 400 }
       );
     }
 
-    const beritaCount = await prisma.berita.count();
-    if (beritaCount >= 20) {
-      return NextResponse.json(
-        { message: "Maksimal berita yang bisa ditampilkan hanya 20" },
-        { status: 400 }
-      );
+    let imageUrl = "";
+
+    if (file) {
+      const fileBuffer = Buffer.from(await file.arrayBuffer());
+      const fileName = `articles/${Date.now()}_${file.name}`;
+
+      // Upload ke Vercel Blob
+      const { url } = await put(fileName, fileBuffer, { access: "public" });
+      imageUrl = url;
     }
 
-    // **Penyimpanan sementara di /tmp (bukan di public/)**
-    const filePath = `/tmp/${Date.now()}-${image.name}`;
-    await writeFile(filePath, Buffer.from(await image.arrayBuffer()));
-
-    // **Jika ingin menyimpan di cloud storage, upload ke layanan eksternal di sini**
-    // Contoh upload ke Cloudinary, Supabase Storage, atau Firebase Storage
-
-    // Simpan data berita ke database
-    const berita = await prisma.berita.create({
-      data: { judul, image: filePath, penulis, text },
+    // Simpan berita ke database
+    const newBerita = await prisma.berita.create({
+      data: {
+        judul: title,
+        text: content,
+        image: imageUrl,
+        penulis: penulis,
+      },
     });
 
-    return NextResponse.json(berita, { status: 201 });
+    return NextResponse.json({
+      message: "Berita berhasil ditambahkan",
+      berita: newBerita,
+    });
   } catch (error) {
-    console.error("Error saat menyimpan berita:", error);
-
+    console.error(error);
     return NextResponse.json(
-      { message: "Gagal menyimpan berita" },
+      { error: "Gagal menambahkan berita" },
       { status: 500 }
     );
   }
@@ -89,11 +91,12 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    if (berita.image.startsWith("/tmp/")) {
+    // Jika berita memiliki gambar di Vercel Blob, hapus dari storage
+    if (berita.image.startsWith("https://")) {
       try {
-        await unlink(berita.image);
+        await del(berita.image);
       } catch (error) {
-        console.warn("Gambar tidak ditemukan atau sudah terhapus:", error);
+        console.warn("Gagal menghapus gambar dari Vercel Blob:", error);
       }
     }
 

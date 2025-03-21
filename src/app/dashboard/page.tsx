@@ -41,7 +41,7 @@ export default function Dashboard() {
     setPreviewForProfile(URL.createObjectURL(file));
   };
 
-  const handleUpdate = async (e: any) => {
+  const handleUpdateProfile = async (e: any) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
@@ -58,7 +58,8 @@ export default function Dashboard() {
     if (res.ok) {
       alert("Data berhasil diperbarui!");
     } else {
-      alert("Gagal memperbarui data");
+      const data = await res.json();
+      alert(data.error);
     }
   };
 
@@ -87,7 +88,7 @@ export default function Dashboard() {
     if (image) formData.append("image", image);
     formData.append("judul", judul);
     formData.append("penulis", penulis);
-    formData.append("text", text);
+    formData.append("content", text);
 
     const res = await fetch("/api/berita", {
       method: "POST",
@@ -106,7 +107,8 @@ export default function Dashboard() {
       setImage(null);
       setPreview("");
     } else {
-      alert("Gagal menambahkan berita");
+      const data = await res.json();
+      alert(data.error);
     }
   };
 
@@ -186,7 +188,7 @@ export default function Dashboard() {
             <h1 className="text-2xl font-bold mb-4">Profil Kepala Sekolah</h1>
             <form
               className="space-y-4 bg-white p-6 shadow rounded-lg"
-              onSubmit={handleUpdate}
+              onSubmit={handleUpdateProfile}
             >
               <label className="text-sm font-bold">
                 Upload foto Kepala Sekolah :
@@ -201,7 +203,7 @@ export default function Dashboard() {
                 <img
                   src={previewForProfile}
                   alt="Preview"
-                  className="w-full h-40 object-cover mt-2 rounded"
+                  className="w-full h-[15rem] object-cover mt-2 rounded"
                 />
               )}
               <textarea
@@ -239,7 +241,7 @@ export default function Dashboard() {
                 <img
                   src={preview}
                   alt="Preview"
-                  className="w-full h-40 object-cover mt-2"
+                  className="w-full h-[15rem] object-cover mt-2"
                 />
               )}
               <input

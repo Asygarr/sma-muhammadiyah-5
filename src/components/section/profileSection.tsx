@@ -25,6 +25,9 @@ export default function ProfileSection({ id }: { id?: string }) {
     });
 
     const data = await res.json();
+
+    console.log(data);
+
     setSambutan(data.sambutan);
   };
 
@@ -49,7 +52,7 @@ export default function ProfileSection({ id }: { id?: string }) {
             className="rounded-lg shadow-lg"
           /> */}
           {sambutan.imageUrl ? (
-            <Image
+            <img
               src={sambutan.imageUrl}
               alt="Kepala Sekolah"
               width={500}

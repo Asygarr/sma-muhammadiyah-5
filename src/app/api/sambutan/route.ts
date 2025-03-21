@@ -1,12 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import path from "path";
-import { writeFile, unlink } from "fs/promises";
-import fs from "fs";
+import { put, del } from "@vercel/blob";
 import { verifyToken } from "@/lib/auth";
 import { NextRequest } from "next/server";
-
-const uploadDir = path.join(process.cwd(), "public/images");
 
 export async function GET(req: NextRequest) {
   try {
@@ -84,9 +80,16 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Teks wajib diisi" }, { status: 400 });
     }
 
-    if (text.split(" ").length > 90) {
+    if (text.split(" ").length > 100) {
       return NextResponse.json(
-        { error: "Teks tidak boleh lebih dari 80 kata" },
+        { error: "Teks tidak boleh lebih dari 100 kata" },
+        { status: 400 }
+      );
+    }
+
+    if (file && file.size > 2097152) {
+      return NextResponse.json(
+        { error: "Ukuran file tidak boleh lebih dari 2mb" },
         { status: 400 }
       );
     }
@@ -99,30 +102,26 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    let newImageUrl = sambutan.imageUrl;
+    if (sambutan.imageUrl) {
+      await del(
+        sambutan.imageUrl
+          .replace("https://", "")
+          .replace("4i3ex03wrf89onnk.public.blob.vercel-storage.com/", "")
+      );
+    }
+
+    let newImageUrl = "";
 
     if (file) {
-      // Hapus gambar lama jika tersimpan secara lokal di /tmp/
-      if (sambutan.imageUrl.startsWith("/tmp/")) {
-        try {
-          await unlink(sambutan.imageUrl);
-        } catch (error) {
-          console.warn(
-            "Gambar lama tidak ditemukan atau sudah terhapus:",
-            error
-          );
-        }
-      } else {
-        // Jika gambar ada di cloud, tambahkan logika penghapusan di Cloudinary/Firebase/S3
-      }
-
-      // Simpan gambar baru di folder /tmp/ (hanya sementara)
+      // Upload gambar baru ke Vercel Blob
       const fileBuffer = Buffer.from(await file.arrayBuffer());
-      const fileName = `${Date.now()}_${file.name}`;
-      const filePath = path.join("/tmp", fileName);
-      await fs.promises.writeFile(filePath, fileBuffer);
+      const blobName = `sambutan/${Date.now()}_${file.name}`;
 
-      newImageUrl = `/tmp/${fileName}`; // Simpan path sementara
+      const { url } = await put(blobName, fileBuffer, {
+        access: "public",
+      });
+
+      newImageUrl = url; // Simpan URL gambar baru dari Vercel Blob
     }
 
     // Update data sambutan di database
