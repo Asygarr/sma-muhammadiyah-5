@@ -39,6 +39,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (file && Array.isArray(file)) {
+      return NextResponse.json(
+        { error: "Hanya satu gambar yang diizinkan" },
+        { status: 400 }
+      );
+    }
+
     if (title.split(" ").length > 25) {
       return NextResponse.json(
         { error: "Judul tidak boleh lebih dari 25 kata" },

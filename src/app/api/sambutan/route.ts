@@ -32,6 +32,13 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Teks wajib diisi" }, { status: 400 });
     }
 
+    if (file && Array.isArray(file)) {
+      return NextResponse.json(
+        { error: "Hanya satu gambar yang diizinkan" },
+        { status: 400 }
+      );
+    }
+
     if (text.split(" ").length > 100) {
       return NextResponse.json(
         { error: "Teks tidak boleh lebih dari 100 kata" },
