@@ -32,23 +32,9 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Teks wajib diisi" }, { status: 400 });
     }
 
-    if (file && Array.isArray(file)) {
-      return NextResponse.json(
-        { error: "Hanya satu gambar yang diizinkan" },
-        { status: 400 }
-      );
-    }
-
     if (text.split(" ").length > 100) {
       return NextResponse.json(
         { error: "Teks tidak boleh lebih dari 100 kata" },
-        { status: 400 }
-      );
-    }
-
-    if (file && file.size > 2097152) {
-      return NextResponse.json(
-        { error: "Ukuran file tidak boleh lebih dari 2mb" },
         { status: 400 }
       );
     }
@@ -61,7 +47,7 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    if (sambutan.imageUrl) {
+    if (file && sambutan.imageUrl) {
       await del(
         sambutan.imageUrl
           .replace("https://", "")
@@ -69,10 +55,23 @@ export async function PUT(req: NextRequest) {
       );
     }
 
+    if (file && Array.isArray(file)) {
+      return NextResponse.json(
+        { error: "Hanya satu gambar yang diizinkan" },
+        { status: 400 }
+      );
+    }
+
+    if (file && file.size > 2097152) {
+      return NextResponse.json(
+        { error: "Ukuran file tidak boleh lebih dari 2mb" },
+        { status: 400 }
+      );
+    }
+
     let newImageUrl = "";
 
     if (file) {
-      // Upload gambar baru ke Vercel Blob
       const fileBuffer = Buffer.from(await file.arrayBuffer());
       const blobName = `sambutan/${Date.now()}_${file.name}`;
 
@@ -81,6 +80,8 @@ export async function PUT(req: NextRequest) {
       });
 
       newImageUrl = url;
+    } else {
+      newImageUrl = sambutan.imageUrl;
     }
 
     const updatedSambutan = await prisma.sambutan.update({

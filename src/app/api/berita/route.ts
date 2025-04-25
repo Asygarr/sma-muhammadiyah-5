@@ -32,9 +32,9 @@ export async function POST(req: NextRequest) {
     const penulis = formData.get("penulis") as string;
     const content = formData.get("content") as string;
 
-    if (!title || !content) {
+    if (!title || !content || !penulis || !file) {
       return NextResponse.json(
-        { error: "Judul dan konten wajib diisi" },
+        { error: "Judul, konten, penulis wajib diisi dan upload gambar anda!" },
         { status: 400 }
       );
     }
@@ -56,7 +56,10 @@ export async function POST(req: NextRequest) {
     const totalBerita = await prisma.berita.count();
     if (totalBerita >= 12) {
       return NextResponse.json(
-        { error: "Maksimal berita yang dapat ditambahkan adalah 20" },
+        {
+          error:
+            "Maksimal berita yang dapat ditambahkan adalah 20, tolong hapus berita yang lama",
+        },
         { status: 400 }
       );
     }
