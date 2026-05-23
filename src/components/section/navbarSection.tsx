@@ -34,6 +34,7 @@ export default function NavbarSection() {
             { name: "Ekstrakurikuler", href: "#ekstrakurikuler" },
             { name: "Berita", href: "#berita" },
             { name: "Lokasi", href: "#lokasi" },
+            { name: "Portofolio", href: "/portfolio" },
           ].map((item) => (
             <Link
               key={item.name}
@@ -82,6 +83,7 @@ export default function NavbarSection() {
               { name: "Ekstrakurikuler", href: "#ekstrakurikuler" },
               { name: "Berita", href: "#berita" },
               { name: "Lokasi", href: "#lokasi" },
+              { name: "Portofolio", href: "/portfolio" },
             ].map((item) => (
               <Link
                 key={item.name}
