@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const GITHUB_USERNAME = "Asygarr";
+const REVALIDATE_SECONDS = 3600;
+const GITHUB_PAGE_SIZE = 100;
 
 type GitHubRepo = {
   id: number;
@@ -20,30 +22,42 @@ export const metadata: Metadata = {
 };
 
 async function getRepositories() {
-  const response = await fetch(
-    `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`,
-    {
-      next: { revalidate: 3600 },
+  let page = 1;
+  let hasMoreRepositories = true;
+  let repositories: GitHubRepo[] = [];
+
+  while (hasMoreRepositories) {
+    const requestUrl = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=${GITHUB_PAGE_SIZE}&sort=updated&page=${page}`;
+    const response = await fetch(requestUrl, {
+      next: { revalidate: REVALIDATE_SECONDS },
       headers: {
         Accept: "application/vnd.github+json",
       },
-    }
-  );
+    });
 
-  if (!response.ok) {
-    return [] as GitHubRepo[];
+    if (!response.ok) {
+      console.error(
+        `GitHub API error on page ${page}: ${response.status} ${response.statusText} (${requestUrl})`
+      );
+      return { repositories: [] as GitHubRepo[], hasFetchError: true };
+    }
+
+    const pageRepositories = (await response.json()) as GitHubRepo[];
+    repositories = repositories.concat(pageRepositories);
+
+    hasMoreRepositories = pageRepositories.length === GITHUB_PAGE_SIZE;
+
+    page += 1;
   }
 
-  const repositories = (await response.json()) as GitHubRepo[];
-
-  return repositories.sort(
-    (a, b) =>
-      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-  );
+  return {
+    repositories,
+    hasFetchError: false,
+  };
 }
 
 export default async function PortfolioPage() {
-  const repositories = await getRepositories();
+  const { repositories, hasFetchError } = await getRepositories();
   const totalStars = repositories.reduce(
     (sum, repository) => sum + repository.stargazers_count,
     0
@@ -97,6 +111,12 @@ export default async function PortfolioPage() {
         </div>
 
         <section className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {hasFetchError && (
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 md:col-span-2 lg:col-span-3">
+              Gagal memuat data terbaru dari GitHub. Silakan coba lagi beberapa
+              saat.
+            </div>
+          )}
           {repositories.map((repository) => (
             <article
               key={repository.id}
@@ -116,7 +136,7 @@ export default async function PortfolioPage() {
                   ⭐ {repository.stargazers_count}
                 </span>
                 <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-emerald-700">
-                  Fork {repository.forks_count}
+                  Forks {repository.forks_count}
                 </span>
               </div>
               <p className="mt-3 text-xs text-slate-500">
