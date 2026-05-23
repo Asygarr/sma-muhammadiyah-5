@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type GithubRepo = {
   id: number;
   name: string;
@@ -21,38 +23,64 @@ type GithubUser = {
 };
 
 const USERNAME = "Asygarr";
-export const dynamic = "force-dynamic";
+const REVALIDATE_SECONDS = 3600;
+const GITHUB_HEADERS = {
+  Accept: "application/vnd.github+json",
+};
 
-async function getGithubData() {
-  const [userRes, reposRes] = await Promise.all([
-    fetch(`https://api.github.com/users/${USERNAME}`, {
-      next: { revalidate: 3600 },
-      headers: {
-        Accept: "application/vnd.github+json",
-      },
-    }),
-    fetch(
-      `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`,
+async function getAllRepos() {
+  const repos: GithubRepo[] = [];
+  let page = 1;
+
+  while (true) {
+    const reposRes = await fetch(
+      `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100&page=${page}`,
       {
-        next: { revalidate: 3600 },
-        headers: {
-          Accept: "application/vnd.github+json",
-        },
+        next: { revalidate: REVALIDATE_SECONDS },
+        headers: GITHUB_HEADERS,
       }
-    ),
-  ]);
+    );
 
-  if (!userRes.ok || !reposRes.ok) {
-    return { user: null, repos: [] as GithubRepo[] };
+    if (!reposRes.ok) {
+      console.error(
+        `GitHub repo fetch failed on page ${page} with status ${reposRes.status}`
+      );
+      break;
+    }
+
+    const chunk = (await reposRes.json()) as GithubRepo[];
+    repos.push(...chunk);
+
+    if (chunk.length < 100) {
+      break;
+    }
+
+    page += 1;
   }
 
-  const user = (await userRes.json()) as GithubUser;
-  const repos = ((await reposRes.json()) as GithubRepo[]).sort(
-    (a, b) =>
-      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-  );
+  return repos;
+}
 
-  return { user, repos };
+async function getGithubData() {
+  try {
+    const [userRes, repos] = await Promise.all([
+      fetch(`https://api.github.com/users/${USERNAME}`, {
+        next: { revalidate: REVALIDATE_SECONDS },
+        headers: GITHUB_HEADERS,
+      }),
+      getAllRepos(),
+    ]);
+
+    if (!userRes.ok) {
+      return { user: null, repos };
+    }
+
+    const user = (await userRes.json()) as GithubUser;
+    return { user, repos };
+  } catch (error) {
+    console.error("Failed to fetch GitHub portfolio data:", error);
+    return { user: null, repos: [] };
+  }
 }
 
 export default async function Home() {
@@ -65,13 +93,15 @@ export default async function Home() {
       <section className="mx-auto w-full max-w-6xl px-6 py-12">
         <div className="mb-10 flex flex-col gap-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
-            <img
+            <Image
               src={
                 user?.avatar_url ??
                 "https://avatars.githubusercontent.com/u/0?v=4"
               }
               alt={`Avatar ${user?.login ?? USERNAME}`}
               className="h-20 w-20 rounded-full border border-slate-700"
+              width={80}
+              height={80}
             />
             <div>
               <h1 className="text-2xl font-bold">
@@ -110,57 +140,57 @@ export default async function Home() {
           </div>
         </div>
 
-        <h2 className="mb-4 text-xl font-semibold">Semua Proyek & Repository</h2>
+        <h2 className="mb-4 text-xl font-semibold">Semua Proyek & Repositori</h2>
         {repos.length === 0 ? (
           <p className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 text-slate-300">
             Data repository belum bisa dimuat saat ini. Coba refresh halaman.
           </p>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
-          {repos.map((repo) => (
-            <article
-              key={repo.id}
-              className="rounded-xl border border-slate-800 bg-slate-900/50 p-5"
-            >
-              <div className="mb-2 flex items-start justify-between gap-3">
-                <a
-                  href={repo.html_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-lg font-semibold text-cyan-300 hover:text-cyan-200"
-                >
-                  {repo.name}
-                </a>
-                <span className="rounded-md bg-slate-800 px-2 py-1 text-xs text-slate-300">
-                  ⭐ {repo.stargazers_count}
-                </span>
-              </div>
-              <p className="mb-4 text-sm text-slate-300">
-                {repo.description ?? "Tidak ada deskripsi proyek."}
-              </p>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
-                <span className="rounded-md border border-slate-700 px-2 py-1">
-                  {repo.language ?? "Unknown"}
-                </span>
-                <span className="rounded-md border border-slate-700 px-2 py-1">
-                  Forks: {repo.forks_count}
-                </span>
-                <span className="rounded-md border border-slate-700 px-2 py-1">
-                  Update: {new Date(repo.updated_at).toLocaleDateString("id-ID")}
-                </span>
-                {repo.homepage ? (
+            {repos.map((repo) => (
+              <article
+                key={repo.id}
+                className="rounded-xl border border-slate-800 bg-slate-900/50 p-5"
+              >
+                <div className="mb-2 flex items-start justify-between gap-3">
                   <a
-                    href={repo.homepage}
+                    href={repo.html_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-md border border-cyan-700 px-2 py-1 text-cyan-300 hover:text-cyan-200"
+                    className="text-lg font-semibold text-cyan-300 hover:text-cyan-200"
                   >
-                    Live Demo
+                    {repo.name}
                   </a>
-                ) : null}
-              </div>
-            </article>
-          ))}
+                  <span className="rounded-md bg-slate-800 px-2 py-1 text-xs text-slate-300">
+                    ⭐ {repo.stargazers_count}
+                  </span>
+                </div>
+                <p className="mb-4 text-sm text-slate-300">
+                  {repo.description ?? "Tidak ada deskripsi proyek."}
+                </p>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+                  <span className="rounded-md border border-slate-700 px-2 py-1">
+                    {repo.language ?? "Unknown"}
+                  </span>
+                  <span className="rounded-md border border-slate-700 px-2 py-1">
+                    Forks: {repo.forks_count}
+                  </span>
+                  <span className="rounded-md border border-slate-700 px-2 py-1">
+                    Update: {new Date(repo.updated_at).toLocaleDateString("id-ID")}
+                  </span>
+                  {repo.homepage ? (
+                    <a
+                      href={repo.homepage}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-md border border-cyan-700 px-2 py-1 text-cyan-300 hover:text-cyan-200"
+                    >
+                      Live Demo
+                    </a>
+                  ) : null}
+                </div>
+              </article>
+            ))}
           </div>
         )}
       </section>
